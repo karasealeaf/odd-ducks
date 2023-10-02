@@ -10,6 +10,7 @@ body {
 
 main {
   width: 1000px;
+  height: 1000px;
   margin: 3rem auto;
   display: grid;
   grid-template-columns: 200px 1fr;
@@ -19,20 +20,21 @@ main {
 main img {
   width: 75px;
   grid-row-start: 1;
-  grid-row-end: 1;
+  grid-row-end: 2;
   grid-column-start: 1;
   grid-column-end: 2;
-  z-index: 2;
 }
 
 h1 {
+  background-color: rgb(85, 135, 98);
   font-size: 1.25rem;
   color: rgb(255, 255, 255);
-  margin: 2rem 5rem 5rem;
+  margin: 2rem 5rem 10rem;
   grid-row-start: 1;
   grid-row-end: 2;
   grid-column-start: 1;
   grid-column-end: 2;
+  z-index: 1;
 }
 
 table {
@@ -43,36 +45,40 @@ table {
 }
 
 section {
+  width: 800px;
   grid-row-start: 2;
   grid-row-end: 3;
   grid-column-start: 2;
   grid-column-end: 3;
-}
-
-p {
-  grid-row-start: 3;
-  grid-row-end: 4;
-  grid-column-start: 2;
-  grid-column-end: 3;
-}
-
-#clicks-allowed {
-  grid-row-start: 4;
-  grid-row-end: 5;
-  grid-column-start: 1;
-  grid-column-end: 4;
-}
-
-section {
-  background-color: rgba(211, 187, 176, 0.3);
-  max-height: 26rem;
+  background-color: rgb(85, 135, 98);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  grid-row-start: 2;
-  grid-row-end: 4;
+}
+
+p {
+  grid-row-start: 4;
+  grid-row-end: 5;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  font-size: 1.75rem;
+  color: rgb(255, 255, 255);
+}
+
+.clicks-allowed {
+  grid-row-start: 5;
+  grid-row-end: 6;
   grid-column-start: 1;
   grid-column-end: 3;
+  background-color: rgb(85, 135, 98);
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+.clicks-allowed:hover {
+  background-color: rgb(155, 197, 166);
 }
 
 section img {
@@ -82,24 +88,5 @@ section img {
 }
 
 section img:hover {
-  border: 5px solid rosybrown;
-}
-
-section + div {
-  background-color: darkgray;
-  color: lightgray;
-  padding: 0.5rem 1rem;
-  width: max-content;
-  height: max-content;
-  margin: 1rem;
-}
-
-section + div.clicks-allowed {
-  background-color: rosybrown;
-  color: white;
-  cursor: pointer;
-}
-
-section + div.clicks-allowed:hover {
-  background-color: rgb(211, 187, 175);
+  border: 5px solid rgb(155, 197, 166);
 }

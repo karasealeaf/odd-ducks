@@ -77,7 +77,6 @@ const allProduct = [
   new product("water", "./images/water-can.jpg"),
   new product("wine", "./images/wine-glass.jpg"),
 ];
-
 productContainer.addeventlistener("click", handleProductClick);
 
 rendorProduct();
