@@ -1,82 +1,101 @@
-let productContainer = document.querySelector("section");
-let image1 = document.querySelector("section img:first-child");
-let image2 = document.querySelector("section img:nth-child(2)");
-let image3 = document.querySelector("section img:nth-child(3)");
-function Product(name, src) {
+const image1 = document.getElementById("image1");
+const image2 = document.getElementById("image2");
+const image3 = document.getElementById("image3");
+image1.addEventListener("click", handleProductClick);
+
+let userClicks = 0;
+let maxClicks = 25;
+
+function Product(name) {
   this.name = name;
-  this.src = src;
+  this.src = `./images/${name}.jpg`;
   this.view = 0;
   this.clicks = 0;
 }
 
-function getRandomIndex() {
-  return Math.floor(Math.random() * allProduct.length);
+const products = [
+  new Product("bag"),
+  new Product("banana"),
+  new Product("bathroom"),
+  new Product("boots"),
+  new Product("breakfast"),
+  new Product("bubblegum"),
+  new Product("chair"),
+  new Product("cthulhu"),
+  new Product("dog-duck"),
+  new Product("dragon"),
+  new Product("pen"),
+  new Product("pet-sweep"),
+  new Product("scissors"),
+  new Product("shark"),
+  new Product("sweep"),
+  new Product("tauntaun"),
+  new Product("unicorn"),
+  new Product("water-can"),
+  new Product("wine-glass"),
+];
+
+function randomProdIdx() {
+  return Math.floor(Math.random() * products.length);
 }
 
-function renderProduct() {
-  let product1Index = getRandomIndex();
-  let product2Index = getRandomIndex();
-  let product3Index = getRandomIndex();
+function renderProducts() {
+  let prod1 = randomProdIdx();
+  let prod2 = randomProdIdx();
+  let prod3 = randomProdIdx();
 
-  while (
-    product1Index === product2Index ||
-    product2Index === product3Index ||
-    product1Index === product3Index
-  ) {
-    product1Index = getRandomIndex();
-    product2Index = getRandomIndex();
-    product3Index = getRandomIndex();
+  while (prod1 === prod2 || prod1 === prod3 || prod2 === prod3) {
+    prod2 = randomProdIdx();
+    prod3 = randomProdIdx();
   }
+  console.log(prod1, prod2, prod3);
+  image1.src = products[prod1].src;
+  image2.src = products[prod2].src;
+  image3.src = products[prod3].src;
+  image1.alt = products[prod1].name;
+  image2.alt = products[prod2].name;
+  image3.alt = products[prod3].name;
+  image1.addEventListener("click", handleProductClick);
+  image2.addEventListener("click", handleProductClick);
+  image3.addEventListener("click", handleProductClick);
 
-  image1.src = allProduct[product1Index].src;
-  image2.src = allProduct[product2Index].src;
-  image3.src = allProduct[product3Index].src;
-  image1.alt = allProduct[product1Index].name;
-  image2.alt = allProduct[product2Index].name;
-  image3.alt = allProduct[product3Index].name;
-
-  allProduct[product1Index].views++;
-  allProduct[product2Index].views++;
-  allProduct[product3Index].views++;
+  products[prod1].views++;
+  products[prod2].views++;
+  products[prod3].views++;
 }
 
 function handleProductClick(event) {
+  if (userClicks === maxClicks) {
+    alert("You have run out of votes!");
+    return;
+  }
+
+  userClicks++;
+
   let clickedProduct = event.target.alt;
 
-  if (event.target === productContainer) {
-    alert("Please select an image.");
-  } else {
-    rendorProduct();
-  }
-  for (let i = 0; i < allProduct.length; i++) {
-    if (clickedProduct === allProduct[i].name) {
-      allProduct[i].clicks++;
+  for (let i = 0; i < products.length; i++) {
+    if (clickedProduct === products[i].name) {
+      products[i].clicks++;
       break;
     }
   }
+  renderProducts();
 }
 
-const allProduct = [
-  new product("bag", "./images/bag.jpg"),
-  new product("banana", "./images/banana.jpg"),
-  new product("bathroom", "./images/bathroom.jpg"),
-  new product("boots", "./images/boots.jpg"),
-  new product("breakfast", "./images/breakfast.jpg"),
-  new product("bubblegum", "./images/bubblegum.jpg"),
-  new product("chair", "./images/chair.jpg"),
-  new product("cthulhu", "./images/cthulhu.jpg"),
-  new product("dog", "./images/dog-duck.jpg"),
-  new product("dragon", "./images/dragon.jpg"),
-  new product("pen", "./images/pen.jpg"),
-  new product("pet", "./images/pet-sweep.jpg"),
-  new product("scissors", "./images/scissors.jpg"),
-  new product("shark", "./images/shark.jpg"),
-  new product("sweep", "./images/sweep.png"),
-  new product("tauntaun", "./images/tauntaun.jpg"),
-  new product("unicorn", "./images/unicorn.jpg"),
-  new product("water", "./images/water-can.jpg"),
-  new product("wine", "./images/wine-glass.jpg"),
-];
-productContainer.addeventlistener("click", handleProductClick);
+function showResults() {
+  console.log("show results");
+  const results = document.getElementById("results");
 
-rendorProduct();
+  for (let i = 0; i < products.length; i++) {
+    const li = document.createElement("li");
+    const product = products[i];
+    li.textContent = `${product.name} was viewed ${product.views} times, and clicked ${product.clicks} times`;
+    results.appendChild(li);
+  }
+}
+
+const viewResults = document.getElementById("view-results");
+viewResults.addEventListener("click", showResults);
+
+renderProducts();

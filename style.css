@@ -7,7 +7,6 @@ body {
   background-color: rgba(19, 139, 49, 0.333);
   color: rgb(251, 251, 251);
 }
-
 main {
   width: 1000px;
   height: 1000px;
@@ -34,10 +33,9 @@ h1 {
   grid-row-end: 2;
   grid-column-start: 1;
   grid-column-end: 2;
-  z-index: 1;
 }
 
-table {
+ul {
   grid-row-start: 2;
   grid-row-end: 4;
   grid-column-start: 1;
@@ -61,7 +59,7 @@ p {
   grid-row-end: 5;
   grid-column-start: 2;
   grid-column-end: 3;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   color: rgb(255, 255, 255);
 }
 
@@ -82,7 +80,7 @@ p {
 }
 
 section img {
-  width: 460px;
+  width: 250px;
   max-height: 26rem;
   border: 5px solid transparent;
 }
