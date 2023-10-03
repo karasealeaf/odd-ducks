@@ -1,14 +1,11 @@
-const ctx = document.getElementById("myChart");
 const image1 = document.getElementById("image1");
 const image2 = document.getElementById("image2");
 const image3 = document.getElementById("image3");
 let productNames = [];
 let productViews = [];
 let productClicks = [];
-image1.addEventListener("click", handleProductClick);
-
 let userClicks = 0;
-let maxClicks = 25;
+let maxClicks = 5;
 
 function Product(name) {
   this.name = name;
@@ -52,51 +49,25 @@ function renderProducts() {
     prod2 = randomProdIdx();
     prod3 = randomProdIdx();
   }
-  console.log(prod1, prod2, prod3);
+
   image1.src = products[prod1].src;
   image2.src = products[prod2].src;
   image3.src = products[prod3].src;
   image1.alt = products[prod1].name;
   image2.alt = products[prod2].name;
   image3.alt = products[prod3].name;
-  image1.addEventListener("click", handleProductClick);
-  image2.addEventListener("click", handleProductClick);
-  image3.addEventListener("click", handleProductClick);
 
   products[prod1].views++;
   products[prod2].views++;
   products[prod3].views++;
 }
 
-const pictures = [Product].sort(function (image1, image2, image3) {
-  return Math.floor(Math.random() * 3) - 1;
-});
-
-// let images = [image1, image2, image3];
-// let prevIndex;
-
-// function randImg() {
-//   let size = images.length;
-//   let randomIndex = Math.floor(size * Math.random());
-
-//   if (prevIndex === randomIndex) {
-//     console.log("last image already used index " + prevIndex);
-//     while (prevIndex === randomIndex) {
-//       randomIndex = Math.floor(size * Math.random());
-//       console.log("changing index to " + randomIndex);
-//     }
-//   }
-
-//   prevIndex = randomIndex;
-//   console.log("new image: " + images[randomIndex]);
-// }
-
 function handleProductClick(event) {
   if (userClicks === maxClicks) {
-    alert("You have run out of votes!");
+    alert("You have run out of votes");
+    renderChart();
     return;
   }
-
   userClicks++;
 
   let clickedProduct = event.target.alt;
@@ -107,11 +78,15 @@ function handleProductClick(event) {
       break;
     }
   }
+
   renderProducts();
 }
 
+image1.addEventListener("click", handleProductClick);
+image2.addEventListener("click", handleProductClick);
+image3.addEventListener("click", handleProductClick);
+
 function showResults() {
-  console.log("show results");
   const results = document.getElementById("results");
 
   for (let i = 0; i < products.length; i++) {
@@ -119,28 +94,42 @@ function showResults() {
     const product = products[i];
     li.textContent = `${product.name} was viewed ${product.views} times, and clicked ${product.clicks} times`;
     results.appendChild(li);
-    productNames.push(products.name);
-    productViews.push(products.views);
-    productClicks.push(products.clicks);
   }
-  new chart(ctx, config);
 }
-const config = {
-  type: "bar",
-  data: {
-    labels: productNames,
-    datasets: [
-      {
-        label: "# of votes",
-        data: productClicks,
-        borderWidth: 6,
-        backgroundColor: ["skyblue"],
-      },
-    ],
-  },
-};
 
 const viewResults = document.getElementById("view-results");
 viewResults.addEventListener("click", showResults);
 
 renderProducts();
+
+function renderChart() {
+  const ctx = document.getElementById("myChart");
+
+  const names = [];
+  const views = [];
+  const clicks = [];
+
+  productNames.push(products.names);
+  productViews.push(products.views);
+  productClicks.push(products.clicks);
+
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: names,
+      datasets: [
+        {
+          label: "# of views",
+          data: views,
+          borderWidth: 1,
+        },
+        {
+          label: "# of clicks",
+          data: clicks,
+          borderWidth: 1,
+        },
+      ],
+    },
+  });
+}
+
