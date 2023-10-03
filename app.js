@@ -64,6 +64,30 @@ function renderProducts() {
   products[prod3].views++;
 }
 
+const pictures = [Product].sort(function (image1,image2,image3){
+  //explanation below
+  return Math.floor(Math.random()*3)-1
+});
+
+// let images = [image1, image2, image3];
+// let prevIndex;
+
+// function randImg() {
+//   let size = images.length;
+//   let randomIndex = Math.floor(size * Math.random());
+
+//   if (prevIndex === randomIndex) {
+//     console.log("last image already used index " + prevIndex);
+//     while (prevIndex === randomIndex) {
+//       randomIndex = Math.floor(size * Math.random());
+//       console.log("changing index to " + randomIndex);
+//     }
+//   }
+
+//   prevIndex = randomIndex;
+//   console.log("new image: " + images[randomIndex]);
+// }
+
 function handleProductClick(event) {
   if (userClicks === maxClicks) {
     alert("You have run out of votes!");
