@@ -54,7 +54,7 @@ section {
   align-items: flex-start;
 }
 
-p {
+.myChart {
   grid-row-start: 4;
   grid-row-end: 5;
   grid-column-start: 2;

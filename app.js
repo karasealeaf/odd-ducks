@@ -1,6 +1,10 @@
+const ctx = document.getElementById("myChart");
 const image1 = document.getElementById("image1");
 const image2 = document.getElementById("image2");
 const image3 = document.getElementById("image3");
+let productNames = [];
+let productViews = [];
+let productClicks = [];
 image1.addEventListener("click", handleProductClick);
 
 let userClicks = 0;
@@ -64,9 +68,8 @@ function renderProducts() {
   products[prod3].views++;
 }
 
-const pictures = [Product].sort(function (image1,image2,image3){
-  //explanation below
-  return Math.floor(Math.random()*3)-1
+const pictures = [Product].sort(function (image1, image2, image3) {
+  return Math.floor(Math.random() * 3) - 1;
 });
 
 // let images = [image1, image2, image3];
@@ -116,8 +119,26 @@ function showResults() {
     const product = products[i];
     li.textContent = `${product.name} was viewed ${product.views} times, and clicked ${product.clicks} times`;
     results.appendChild(li);
+    productNames.push(products.name);
+    productViews.push(products.views);
+    productClicks.push(products.clicks);
   }
+  new chart(ctx, config);
 }
+const config = {
+  type: "bar",
+  data: {
+    labels: productNames,
+    datasets: [
+      {
+        label: "# of votes",
+        data: productClicks,
+        borderWidth: 6,
+        backgroundColor: ["skyblue"],
+      },
+    ],
+  },
+};
 
 const viewResults = document.getElementById("view-results");
 viewResults.addEventListener("click", showResults);
