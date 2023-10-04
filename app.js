@@ -22,7 +22,7 @@ function checkLocal() {
   const clicksFromLocalStorage = JSON.parse(localstorage.getItem("clicks"));
 }
 
-if (clicksFromLocalStorage) {
+if (localStorage.getItem("products") === null) {
   new Product("bag", 0, 0);
   new Product("banana", 0, 0);
   new Product("bathroom", 0, 0);
@@ -43,9 +43,10 @@ if (clicksFromLocalStorage) {
   new Product("water-can", 0, 0);
   new Product("wine-glass", 0, 0);
 } else {
-  for (let i = 0; i < clicksFromLocalStorage.length; i++) {
-    const clicksStringified = JSON.stringify(localStorage.getItem("clicks"));
-    localStorage.setItem("clicks", clicksStringified);
+  const productsLS = JSON.parse(localStorage.getItem("products"));
+
+  for (let i = 0; i < productsLS.length; i++) {
+    new Product(productsLS[i].name, productsLS[i].views, productsLS.clicks[i]);
   }
 }
 
