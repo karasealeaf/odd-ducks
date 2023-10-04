@@ -5,36 +5,47 @@ let productNames = [];
 let productViews = [];
 let productClicks = [];
 let userClicks = 0;
-let maxClicks = 5;
+let maxClicks = 25;
 
-function Product(name) {
+const products = [];
+
+function Product(name, views, clicks) {
   this.name = name;
   this.src = `./images/${name}.jpg`;
-  this.view = 0;
-  this.clicks = 0;
+  this.views = views;
+  this.clicks = clicks;
+
+  products.push(this);
 }
 
-const products = [
-  new Product("bag"),
-  new Product("banana"),
-  new Product("bathroom"),
-  new Product("boots"),
-  new Product("breakfast"),
-  new Product("bubblegum"),
-  new Product("chair"),
-  new Product("cthulhu"),
-  new Product("dog-duck"),
-  new Product("dragon"),
-  new Product("pen"),
-  new Product("pet-sweep"),
-  new Product("scissors"),
-  new Product("shark"),
-  new Product("sweep"),
-  new Product("tauntaun"),
-  new Product("unicorn"),
-  new Product("water-can"),
-  new Product("wine-glass"),
-];
+
+if(localStorage.length > 0) {
+
+new Product("bag", 0, 0);
+new Product("banana", 0, 0);
+new Product("bathroom", 0, 0);
+new Product("boots", 0, 0);
+new Product("breakfast", 0, 0);
+new Product("bubblegum", 0, 0);
+new Product("chair", 0, 0);
+new Product("cthulhu", 0, 0);
+new Product("dog-duck", 0, 0);
+new Product("dragon", 0, 0);
+new Product("pen", 0, 0);
+new Product("pet-sweep", 0, 0);
+new Product("scissors", 0, 0);
+new Product("shark", 0, 0);
+new Product("sweep", 0, 0);
+new Product("tauntaun", 0, 0);
+new Product("unicorn", 0, 0);
+new Product("water-can", 0, 0);
+new Product("wine-glass", 0, 0);
+}
+else {
+
+}
+
+
 
 function randomProdIdx() {
   return Math.floor(Math.random() * products.length);
@@ -109,9 +120,11 @@ function renderChart() {
   const views = [];
   const clicks = [];
 
-  productNames.push(products.names);
-  productViews.push(products.views);
-  productClicks.push(products.clicks);
+  for (let i = 0; i < products.length; i++) {
+    names.push(products[i].name);
+    views.push(products[i].views);
+    clicks.push(products[i].clicks);
+  }
 
   new Chart(ctx, {
     type: "bar",
@@ -121,15 +134,70 @@ function renderChart() {
         {
           label: "# of views",
           data: views,
-          borderWidth: 1,
+          borderWidth: 2,
         },
         {
           label: "# of clicks",
           data: clicks,
-          borderWidth: 1,
+          borderWidth: 2,
         },
       ],
     },
   });
 }
 
+function Character(name, weapon) {
+  this.name = name;
+  this.weapon = weapon;
+}
+
+Character.prototype.attack = function () {
+  console.log(`${this.name} attacks with their ${this.weapon}`);
+};
+
+const charactersArray = [];
+
+function checkLocal() {
+  Character.prototype.attack = function () {
+    console.log(`${this.name} attacks with their ${this.weapon}`);
+  };
+
+  const charactersArray = [];
+
+  function checkLocal() {
+    const charsFromLS = JSON.parse(localStorage.getItem("characters"));
+
+    // if that exists:
+    if (charsFromLS) {
+      // reinstantiate my array of objects one by one
+      for (let i = 0; i < charsFromLS.length; i++) {
+        const newChar = new Character(
+          charsFromLS[i].name,
+          charsFromLS[i].weapon
+        );
+        charactersArray.push(newChar);
+      }
+    } else {
+      // if it doesn't exist:
+      // create our characters
+      const char1 = new Character("Tim the Preposterous", "nunchucks");
+      const char2 = new Character("GJ the Wise", "bowstaff");
+      const char3 = new Character("Vicky the Great", "Sarcasm");
+      const char4 = new Character("Demie the Demi-god", "big ol' gun");
+
+      // add them to our array
+      charactersArray.push(char1, char2, char3, char4);
+
+      // put our characters array into local storage
+      putIntoLocalStorage();
+    }
+  }
+
+  // put that array into localStorage after stringifying it
+  function putIntoLocalStorage() {
+    const charactersStringified = JSON.stringify(charactersArray);
+    localStorage.setItem("characters", charactersStringified);
+  }
+
+  checkLocal();
+}
