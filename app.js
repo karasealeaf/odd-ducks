@@ -80,6 +80,7 @@ function handleProductClick(event) {
   if (userClicks === maxClicks) {
     alert("You have no more votes left!");
     renderChart();
+    localStorage.setItem("products", JSON.stringify(products));
     return;
   }
   userClicks++;
