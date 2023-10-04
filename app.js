@@ -18,34 +18,36 @@ function Product(name, views, clicks) {
   products.push(this);
 }
 
-
-if(localStorage.length > 0) {
-
-new Product("bag", 0, 0);
-new Product("banana", 0, 0);
-new Product("bathroom", 0, 0);
-new Product("boots", 0, 0);
-new Product("breakfast", 0, 0);
-new Product("bubblegum", 0, 0);
-new Product("chair", 0, 0);
-new Product("cthulhu", 0, 0);
-new Product("dog-duck", 0, 0);
-new Product("dragon", 0, 0);
-new Product("pen", 0, 0);
-new Product("pet-sweep", 0, 0);
-new Product("scissors", 0, 0);
-new Product("shark", 0, 0);
-new Product("sweep", 0, 0);
-new Product("tauntaun", 0, 0);
-new Product("unicorn", 0, 0);
-new Product("water-can", 0, 0);
-new Product("wine-glass", 0, 0);
-}
-else {
-
+function checkLocal() {
+  const clicksFromLocalStorage = JSON.parse(localstorage.getItem("clicks"));
 }
 
-
+if (clicksFromLocalStorage) {
+  new Product("bag", 0, 0);
+  new Product("banana", 0, 0);
+  new Product("bathroom", 0, 0);
+  new Product("boots", 0, 0);
+  new Product("breakfast", 0, 0);
+  new Product("bubblegum", 0, 0);
+  new Product("chair", 0, 0);
+  new Product("cthulhu", 0, 0);
+  new Product("dog-duck", 0, 0);
+  new Product("dragon", 0, 0);
+  new Product("pen", 0, 0);
+  new Product("pet-sweep", 0, 0);
+  new Product("scissors", 0, 0);
+  new Product("shark", 0, 0);
+  new Product("sweep", 0, 0);
+  new Product("tauntaun", 0, 0);
+  new Product("unicorn", 0, 0);
+  new Product("water-can", 0, 0);
+  new Product("wine-glass", 0, 0);
+} else {
+  for (let i = 0; i < clicksFromLocalStorage.length; i++) {
+    const clicksStringified = JSON.stringify(localStorage.getItem("clicks"));
+    localStorage.setItem("clicks", clicksStringified);
+  }
+}
 
 function randomProdIdx() {
   return Math.floor(Math.random() * products.length);
@@ -75,7 +77,7 @@ function renderProducts() {
 
 function handleProductClick(event) {
   if (userClicks === maxClicks) {
-    alert("You have run out of votes");
+    alert("You have no more votes left!");
     renderChart();
     return;
   }
