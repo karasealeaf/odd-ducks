@@ -149,7 +149,7 @@ function renderChart() {
     },
   });
 }
-
+===============
 function Character(name, weapon) {
   this.name = name;
   this.weapon = weapon;
