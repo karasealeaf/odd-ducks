@@ -8,6 +8,7 @@ let userClicks = 0;
 let maxClicks = 25;
 
 const products = [];
+let previous = [];
 
 function Product(name, views, clicks) {
   this.name = name;
@@ -60,10 +61,20 @@ function renderProducts() {
   let prod2 = randomProdIdx();
   let prod3 = randomProdIdx();
 
-  while (prod1 === prod2 || prod1 === prod3 || prod2 === prod3) {
+  while (
+    prod1 === prod2 ||
+    prod1 === prod3 ||
+    prod2 === prod3 ||
+    previous.includes(prod1) ||
+    previous.includes(prod2) ||
+    previous.includes(prod3)
+  ) {
+    prod1 = randomProdIdx();
     prod2 = randomProdIdx();
     prod3 = randomProdIdx();
   }
+
+  previous = [prod1, prod2, prod3];
 
   image1.src = products[prod1].src;
   image2.src = products[prod2].src;
@@ -117,7 +128,6 @@ image3.addEventListener("click", handleProductClick);
 // viewResults.addEventListener("click", showResults);
 
 // renderProducts();
-
 
 checkLocal();
 renderProducts();
